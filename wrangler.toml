@@ -1,0 +1,14 @@
+name = "cloudflare-r2-bucket-explorer"
+main = "build/worker/shim.mjs"
+compatibility_date = "2025-06-04"
+
+r2_buckets  = [
+  { binding = "BUCKET", bucket_name = "test-bucket"}
+]
+
+[assets]
+binding = "ASSETS"
+directory = "./public/"
+
+[build]
+command = "make -j2 all"
