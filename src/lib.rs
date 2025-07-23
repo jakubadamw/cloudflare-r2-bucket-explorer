@@ -1,8 +1,10 @@
+#[cfg(any(feature = "hydrate", feature = "ssr"))]
 use leptos::prelude::*;
 
 #[cfg(feature = "ssr")]
 use worker::*;
 
+#[cfg(any(feature = "hydrate", feature = "ssr"))]
 use crate::app::*;
 
 mod api;
@@ -17,8 +19,8 @@ mod serve_static;
 fn router(env: worker::Env) -> axum::Router {
     use std::sync::Arc;
 
-    use axum::{routing::post, Extension};
-    use leptos_axum::{generate_route_list, LeptosRoutes};
+    use axum::{Extension, routing::post};
+    use leptos_axum::{LeptosRoutes, generate_route_list};
 
     use crate::api::register_server_functions;
 
@@ -55,10 +57,23 @@ fn router(env: worker::Env) -> axum::Router {
 }
 
 #[cfg(feature = "ssr")]
-#[worker::event(start)]
-pub fn start() {
+#[cfg(target_family = "wasm")]
+mod wasm_workaround {
+    unsafe extern "C" {
+        pub(super) fn __wasm_call_ctors();
+    }
+}
+
+#[cfg(feature = "ssr")]
+#[wasm_bindgen::prelude::wasm_bindgen(start)]
+fn start() {
     _ = console_log::init_with_level(log::Level::Debug);
     console_error_panic_hook::set_once();
+    // Fixe for 'Read a negative address value from the stack. Did we run out of memory?'.
+    #[cfg(target_family = "wasm")]
+    unsafe {
+        wasm_workaround::__wasm_call_ctors()
+    };
 }
 
 #[cfg(feature = "ssr")]

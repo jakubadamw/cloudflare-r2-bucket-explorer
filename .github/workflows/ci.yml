@@ -20,9 +20,12 @@ jobs:
     - name: Install Rust
       uses: actions-rs/toolchain@v1
       with:
-          toolchain: nightly
+          toolchain: nightly-2025-07-22
           components: clippy,rustfmt
           override: true
+
+    - name: Set-up the cache
+      uses: Swatinem/rust-cache@v2
 
     - name: Formatting
       run: cargo fmt --check --verbose
@@ -31,8 +34,10 @@ jobs:
       uses: giraffate/clippy-action@v1
       with:
         clippy_flags: --features ssr
+        tool_name: Clippy (server)
 
     - name: Clippy (client)
       uses: giraffate/clippy-action@v1
       with:
         clippy_flags: --features hydrate
+        tool_name: Clippy (client)
