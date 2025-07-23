@@ -12,10 +12,10 @@
 use std::sync::Arc;
 
 use axum::{
-    http::Uri,
-    http::{header, StatusCode},
-    response::IntoResponse,
     Extension,
+    http::Uri,
+    http::{StatusCode, header},
+    response::IntoResponse,
 };
 use http_body_util::BodyExt as _;
 use worker::*;

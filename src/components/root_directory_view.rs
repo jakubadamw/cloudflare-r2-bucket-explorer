@@ -2,8 +2,8 @@ use std::collections::BTreeSet;
 
 use leptos::prelude::*;
 use leptos_router::{
-    hooks::{use_navigate, use_query_map},
     NavigateOptions,
+    hooks::{use_navigate, use_query_map},
 };
 
 use crate::components::directory_view::{DirectoryView, DirectoryViewState};
