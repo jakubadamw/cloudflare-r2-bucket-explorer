@@ -103,29 +103,11 @@ async fn fetch(
             Some(object) => Ok(axum::response::Response::builder()
                 .status(axum::http::StatusCode::OK)
                 .header("content-type", "application/octet-stream")
-                .body(
-                    object
-                        .body()
-                        .expect("must be available")
-                        .bytes()
-                        .await?
-                        .into(),
-                )?),
-            /*Ok(axum::response::Response::builder()
-                .status(axum::http::StatusCode::OK)
-                .header("content-type", "application/octet-stream")
                 .body(axum::body::Body::from_stream(
-                    object.body().expect("must be available").stream()?,
-                ))?), */
-            /*Some(object) => axum::response::Response::try_from_stream(
-                "application/octet-stream",
-                object
-                    .body()
-                    .expect("must be available")
-                    .stream()?
-                    .map_ok(Bytes::from_owner)
-                    .map_err(|err| Bytes::from_owner(err.to_string().into_bytes())),
-            ),*/
+                    send_wrapper::SendWrapper::new(
+                        object.body().expect("must be available").stream()?,
+                    ),
+                ))?),
             None => Ok(axum::response::Response::builder()
                 .status(axum::http::StatusCode::NOT_FOUND)
                 .body(axum::body::Body::empty())?),
