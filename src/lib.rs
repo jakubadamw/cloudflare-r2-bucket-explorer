@@ -57,23 +57,10 @@ fn router(env: worker::Env) -> axum::Router {
 }
 
 #[cfg(feature = "ssr")]
-#[cfg(target_family = "wasm")]
-mod wasm_workaround {
-    unsafe extern "C" {
-        pub(super) fn __wasm_call_ctors();
-    }
-}
-
-#[cfg(feature = "ssr")]
 #[wasm_bindgen::prelude::wasm_bindgen(start)]
 fn start() {
     _ = console_log::init_with_level(log::Level::Debug);
     console_error_panic_hook::set_once();
-    // Fixe for 'Read a negative address value from the stack. Did we run out of memory?'.
-    #[cfg(target_family = "wasm")]
-    unsafe {
-        wasm_workaround::__wasm_call_ctors()
-    };
 }
 
 #[cfg(feature = "ssr")]
