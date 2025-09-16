@@ -7,9 +7,6 @@ publish = false
 [lib]
 crate-type = ["cdylib"]
 
-[patch.crates-io]
-worker = { git = "https://github.com/cloudflare/workers-rs.git" }
-
 [dependencies]
 axum = { version = "0.8", default-features = false, optional = true }
 base64 = "0.22"
