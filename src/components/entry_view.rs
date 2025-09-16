@@ -28,6 +28,7 @@ pub fn EntryView(
         .to_owned();
     let key_cloned: String = key.clone();
     let key_cloned_cloned = key.clone();
+    let key_cloned_cloned_cloned = key.clone();
     let extension = Path::new(&key)
         .extension()
         .and_then(|ext| ext.to_str())
@@ -54,7 +55,7 @@ pub fn EntryView(
                     EntryType::Directory => {
                         view! {
                             <td colspan="3" data-depth=depth>
-                                {move || state.get().to_emoji()}" "<a on:click=move |_| {
+                                {move || state.get().to_emoji()}" "<a on:click=move |event| {
                                     expanded_keys.update(|expanded| {
                                         if expanded.contains(&key_cloned) {
                                             expanded.remove(&key_cloned);
@@ -62,7 +63,8 @@ pub fn EntryView(
                                             expanded.insert(key_cloned.clone());
                                         }
                                     });
-                                } href="#">{relative_key}</a>
+                                    event.prevent_default();
+                                } href=move || format!("/{key_cloned_cloned_cloned}")>{relative_key}</a>
                             </td>
                         }.into_any()
                     }
