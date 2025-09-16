@@ -80,7 +80,7 @@ pub fn RootDirectoryView(#[prop(into)] path: Signal<String>) -> impl IntoView {
                     path.get().trim_matches('/').rsplit_once('/').map(|(parent_key, _)| parent_key.to_owned()).map(|parent_key| {
                         view! {
                             <tr>
-                                <td colspan="3">"📁 "<a href=move || format!("/{parent_key}/")>"../"</a></td>
+                                <td colspan="3">"📁 "<a rel="external" href=move || format!("/{parent_key}/")>"../"</a></td>
                             </tr>
                         }.into_any()
                     })
