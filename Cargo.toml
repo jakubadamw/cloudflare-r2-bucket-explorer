@@ -41,7 +41,7 @@ tower-service = "0.3"
 urlencoding = "2"
 wasm-bindgen = { version = "0.2", optional = true }
 wasm-bindgen-futures = "0.4"
-worker = { version = "0.6", features = ["http", "axum", "d1"], optional = true }
+worker = { version = "0.7", features = ["http", "axum", "d1"], optional = true }
 
 [features]
 hydrate = [

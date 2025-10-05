@@ -9,6 +9,6 @@ build_frontend:
 	cargo leptos build --release
 
 build_backend:
-	LEPTOS_OUTPUT_NAME=start-axum worker-build --release --features ssr
+	LEPTOS_WASM_OPT_VERSION=version_125 LEPTOS_OUTPUT_NAME=start-axum worker-build --release --features ssr
 
 all: .wrangler/test_bucket_written build_frontend build_backend

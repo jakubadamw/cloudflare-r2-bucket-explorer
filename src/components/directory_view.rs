@@ -60,7 +60,9 @@ pub fn DirectoryView(
                         .map(|entry| view! { <EntryView entry=entry depth=depth expanded_keys=expanded_keys /> }.into_any())
                         .collect_view()
                         .into_any(),
-                    Err(_err) => view! {}.into_any()
+                    Err(_err) => {
+                        ().into_any()
+                    }
                 }
             })}
         </Suspense>
