@@ -15,7 +15,7 @@ pub(crate) enum DirectoryViewState {
 }
 
 impl DirectoryViewState {
-    pub(crate) fn to_emoji(&self) -> &'static str {
+    pub(crate) fn to_emoji(self) -> &'static str {
         match self {
             Self::Unexpanded => "📁",
             Self::Loading => "⏳",
@@ -51,7 +51,7 @@ pub fn DirectoryView(
 
     view! {
         <Suspense
-            fallback=move || view! {}
+            fallback=move || ()
         >
             {move || Suspend::new(async move {
                 match entries.await {

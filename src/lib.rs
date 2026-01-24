@@ -74,7 +74,7 @@ async fn fetch(
 
     let path = request.uri().path();
     let path =
-        urlencoding::decode(&path).map_err(|err| worker::Error::RustError(err.to_string()))?;
+        urlencoding::decode(path).map_err(|err| worker::Error::RustError(err.to_string()))?;
     let key_prefix = path.trim_start_matches('/');
     let readable_key_prefix = if key_prefix.is_empty() {
         "/"
